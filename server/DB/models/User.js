@@ -9,15 +9,18 @@ var UserSchema = new Mongoose.Schema(
     userId: {
       type: String,
       default: randomId,
+      unique: true,
     },
     username: {
       type: String,
       required: true,
+      unique: true,
     },
     name: String,
     email: {
       type: String,
       required: true,
+      unique: true,
     },
     bio: { type: String, default: "" },
     image: {

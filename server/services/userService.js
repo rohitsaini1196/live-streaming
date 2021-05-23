@@ -1,5 +1,6 @@
 const { User } = require("../DB/dbModels");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 module.exports = {
   test: (req, res) => {
     console.log("from rwegister ggd");
@@ -28,7 +29,51 @@ module.exports = {
       const savedUser = await user.save();
       res.json(savedUser);
     } catch (error) {
-      res.status(400).send(err);
+      res.status(400).send(error);
+    }
+  },
+
+  getUsers: async (req, res) => {
+    try {
+      console.log(req.user);
+      const users = await User.find().lean();
+      res.json(users);
+    } catch (error) {
+      res.status(400).send(error);
+    }
+  },
+
+  login: async (req, res) => {
+    const { password, email } = req.body;
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).send("Email not found");
+    }
+    const validPass = await bcrypt.compare(password, user.password);
+    if (!validPass) {
+      return res.status(400).send("Invalid Password");
+    }
+
+    const token = jwt.sign(
+      { _id: user._id, username: user.username },
+      process.env.TOKEN_SECRET
+    );
+
+    res.header("auth-token", token).send(token);
+  },
+
+  getUserByusername: async (req, res) => {
+    const { username } = req.params;
+
+    try {
+      const user = await User.findOne({ username });
+      if (!user) {
+        return res.status(404).send("User not found");
+      }
+
+      res.status(200).json(user);
+    } catch (error) {
+      res.status(400).send(error);
     }
   },
 };

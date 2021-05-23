@@ -5,7 +5,7 @@ const userRouter = require("./UserRouter");
 router.use("/user", userRouter);
 
 router.get("/", (req, res) => {
-  res.send("ROuter.js working fine");
+  res.send("Thanks for using our API");
 });
 
 module.exports = router;

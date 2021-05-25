@@ -39,7 +39,7 @@ function People() {
         <StreamList />
       </div>
 
-      <div style={{ padding: "0rem 1rem" }}>
+      <div style={{ padding: "2rem 1rem 0rem 1rem" }}>
         <div
           style={{
             display: "flex",

@@ -4,6 +4,7 @@ import Profile from "./Profile";
 import People from "./People";
 import Middle from "./Middle";
 import Right from "./Right";
+import Left from "./Left";
 function ScreenLayout() {
   return (
     <div>
@@ -16,7 +17,7 @@ function ScreenLayout() {
       >
         <Grid item xs={12} sm={3}>
           <div style={{}}>
-            <People />
+            <Left />
           </div>
         </Grid>
 

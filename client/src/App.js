@@ -15,6 +15,12 @@ const theme = createMuiTheme({
       main: "#8d90f3",
     },
   },
+
+  // typography:{
+  //   fontFamily:[
+
+  //   ]
+  // }
 });
 function App() {
   return (

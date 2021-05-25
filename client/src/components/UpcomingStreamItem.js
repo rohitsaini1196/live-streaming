@@ -36,14 +36,14 @@ function UpcomingStreamItem() {
       <div style={{ padding: "1rem 1rem" }}>
         <div style={{ display: "flex" }}>
           <img
-            src="https://uploads.dailydot.com/2018/11/watch_nickelodeon_live_stream_free.png?auto=compress%2Cformat&ixlib=php-3.3.0"
+            src="https://i.pinimg.com/originals/f6/aa/07/f6aa07ff9a671ba1d058569f438b126b.jpg"
             width="50%"
             style={{ borderRadius: 5 }}
           />
 
           <div style={{ padding: "0rem 1rem" }}>
             <Typography variant="subtitle2" color="textSecondary">
-              26TH MAY, 5:30PM
+              26th May, 5:30PM
             </Typography>
             <div style={{ display: "flex", alignItems: "center" }}>
               <Avatar
@@ -58,7 +58,12 @@ function UpcomingStreamItem() {
           </div>
         </div>
         <div style={{ padding: "0.5rem 0rem" }}>
-          <Typography component="div">
+          <Typography
+            component="div"
+            noWrap
+            color="textSecondary"
+            variant="subtitle2"
+          >
             <Box fontWeight="fontWeightMedium">
               G2 vs NAVI | Semifinal | ESL One Cologne{" "}
             </Box>

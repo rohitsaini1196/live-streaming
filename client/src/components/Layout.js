@@ -58,6 +58,7 @@ function Layout({ children }) {
         <AppBar
           position="static"
           style={{ backgroundColor: "#23272a", color: "#fff" }}
+          //style={{ background: "transparent", boxShadow: "none" }}
         >
           <Toolbar className={classes.toolbar}>
             <IconButton

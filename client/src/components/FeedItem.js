@@ -51,7 +51,10 @@ function FeedItem() {
             }
             title={
               <Typography variant="body1" className={classes.title}>
-                Rohit Saini
+                Rohit Saini{" "}
+                {/* <span style={{ fontSize: "0.9rem" }} color="grey">
+                  @rohits17
+                </span> */}
               </Typography>
             }
             subheader={

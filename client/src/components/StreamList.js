@@ -36,6 +36,10 @@ const useStyles = makeStyles((theme) => ({
     background:
       "linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)",
   },
+  small: {
+    width: theme.spacing(3),
+    height: theme.spacing(3),
+  },
 }));
 
 function StreamList() {
@@ -44,17 +48,57 @@ function StreamList() {
     <div style={{ padding: "1rem 0rem" }}>
       <div>
         <Grid container spacing={3}>
-          {[1, 2, 3, 4, 5, 6, 7].map((item) => (
+          {[1, 2, 3].map((item) => (
             <Grid item sm={6} md={4} lg={4} xs={6} key={item}>
               <div>
-                <Paper>
+                <Paper style={{ borderRadius: 12 }}>
                   <img
                     src="https://uploads.dailydot.com/2018/11/watch_nickelodeon_live_stream_free.png"
                     width="100%"
+                    style={{
+                      borderTopLeftRadius: 12,
+                      borderTopRightRadius: 12,
+                    }}
                   />
-                  <Typography variant="subtitle2">
+                  <Typography
+                    variant="subtitle1"
+                    color="textSecondary"
+                    noWrap
+                    style={{ padding: "0.3rem 0.5rem" }}
+                  >
                     Blink eSports vs Liquid | Tanacity Major 2021
                   </Typography>
+                  <div
+                    style={{
+                      padding: "0.5rem 0.1rem",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        paddingLeft: "0.4rem",
+                      }}
+                    >
+                      <Avatar
+                        className={classes.small}
+                        src="https://avatars.dicebear.com/api/male/Fortwin.svg"
+                      />
+                      <Typography
+                        variant="subtitle2"
+                        color="textSecondary"
+                        style={{ padding: "0rem 0.3rem" }}
+                      >
+                        rohitsaini
+                      </Typography>
+                    </div>
+                    <IconButton size="small">
+                      <MoreVertIcon />
+                    </IconButton>
+                  </div>
                 </Paper>
               </div>
             </Grid>

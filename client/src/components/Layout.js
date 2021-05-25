@@ -8,6 +8,13 @@ import {
   Button,
   Avatar,
   Container,
+  Popper,
+  Menu,
+  MenuItem,
+  Grow,
+  Paper,
+  MenuList,
+  ClickAwayListener,
 } from "@material-ui/core";
 import Footer from "./Footer";
 import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
@@ -31,18 +38,52 @@ const useStyles = makeStyles((theme) => ({
   toolbar: {
     minHeight: 50,
   },
+  small: {
+    width: theme.spacing(2),
+    height: theme.spacing(2),
+  },
 }));
 
 function Layout({ children }) {
+  const anchorRef = React.useRef(null);
   let history = useHistory();
   const classes = useStyles();
   const [userName, setUserName] = useState("");
+  const [open, setOpen] = React.useState(false);
 
   const localLogout = () => {
     auth.logout();
     setUserName("");
     history.push("/login");
   };
+
+  const handleToggleMenu = () => {
+    setOpen((prevOpen) => !prevOpen);
+  };
+  const handleClose = (event) => {
+    if (anchorRef.current && anchorRef.current.contains(event.target)) {
+      return;
+    }
+
+    setOpen(false);
+  };
+
+  function handleListKeyDown(event) {
+    if (event.key === "Tab") {
+      event.preventDefault();
+      setOpen(false);
+    }
+  }
+
+  // return focus to the button when we transitioned from !open -> open
+  const prevOpen = React.useRef(open);
+  React.useEffect(() => {
+    if (prevOpen.current === true && open === false) {
+      anchorRef.current.focus();
+    }
+
+    prevOpen.current = open;
+  }, [open]);
 
   useEffect(() => {
     console.log("ggwp");
@@ -76,7 +117,7 @@ function Layout({ children }) {
             </Typography>
             {userName ? (
               <div>
-                <Button
+                {/* <Button
                   color="inherit"
                   style={{ textTransform: "none", marginRight: "1rem" }}
                   variant="outlined"
@@ -84,9 +125,13 @@ function Layout({ children }) {
                   onClick={localLogout}
                 >
                   Logout
-                </Button>
-                <IconButton>
-                  <AccountCircleIcon />
+                </Button> */}
+                <IconButton ref={anchorRef} onClick={handleToggleMenu}>
+                  <Avatar
+                    className={classes.large}
+                    alt="Rohit Saini"
+                    src="https://avatars.githubusercontent.com/u/31476481?v=4"
+                  />
                 </IconButton>
               </div>
             ) : (
@@ -112,6 +157,41 @@ function Layout({ children }) {
             )}
           </Toolbar>
         </AppBar>
+
+        <div>
+          <Popper
+            open={open}
+            anchorEl={anchorRef.current}
+            role={undefined}
+            transition
+            disablePortal
+          >
+            {({ TransitionProps, placement }) => (
+              <Grow
+                {...TransitionProps}
+                style={{
+                  transformOrigin:
+                    placement === "bottom" ? "left top" : "left bottom",
+                }}
+              >
+                <Paper>
+                  <ClickAwayListener onClickAway={handleClose}>
+                    <MenuList
+                      autoFocusItem={open}
+                      id="menu-list-grow"
+                      onKeyDown={handleListKeyDown}
+                    >
+                      <MenuItem onClick={handleClose}>Profile</MenuItem>
+                      <MenuItem onClick={handleClose}>Report a Bug</MenuItem>
+                      <MenuItem onClick={handleClose}>Github</MenuItem>
+                      <MenuItem onClick={localLogout}>Logout</MenuItem>
+                    </MenuList>
+                  </ClickAwayListener>
+                </Paper>
+              </Grow>
+            )}
+          </Popper>
+        </div>
 
         {/* <div style={{ textAlign: "center", padding: "1rem" }}></div> */}
         <Container maxWidth="xl" style={{ padding: "2rem 1rem" }}>

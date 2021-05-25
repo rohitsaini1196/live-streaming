@@ -14,13 +14,13 @@ function ScreenLayout() {
         alignItems="flex-start"
         spacing={2}
       >
-        <Grid item xs={12} sm={2}>
+        <Grid item xs={12} sm={3}>
           <div style={{}}>
             <People />
           </div>
         </Grid>
 
-        <Grid item xs={12} sm={7}>
+        <Grid item xs={12} sm={6}>
           <div style={{}}>
             <Middle />
           </div>

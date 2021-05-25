@@ -23,7 +23,7 @@ function Profile() {
   const classes = useStyles();
   return (
     <div>
-      <Paper>
+      <Paper style={{ borderRadius: 12 }}>
         <div style={{ padding: "1rem" }}>
           <div style={{ display: "flex" }}>
             <div>

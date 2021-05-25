@@ -1,9 +1,13 @@
 import {
+  CardHeader,
   Grid,
   GridList,
   GridListTile,
   GridListTileBar,
   IconButton,
+  Paper,
+  Typography,
+  Avatar,
 } from "@material-ui/core";
 import React from "react";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
@@ -38,7 +42,25 @@ function StreamList() {
   const classes = useStyles();
   return (
     <div style={{ padding: "1rem 0rem" }}>
-      <div></div>
+      <div>
+        <Grid container spacing={3}>
+          {[1, 2, 3, 4, 5, 6, 7].map((item) => (
+            <Grid item sm={6} md={4} lg={4} xs={6} key={item}>
+              <div>
+                <Paper>
+                  <img
+                    src="https://uploads.dailydot.com/2018/11/watch_nickelodeon_live_stream_free.png"
+                    width="100%"
+                  />
+                  <Typography variant="subtitle2">
+                    Blink eSports vs Liquid | Tanacity Major 2021
+                  </Typography>
+                </Paper>
+              </div>
+            </Grid>
+          ))}
+        </Grid>
+      </div>
     </div>
   );
 }

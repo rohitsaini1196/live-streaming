@@ -12,21 +12,22 @@ function ScreenLayout() {
         direction="row"
         justify="space-between"
         alignItems="flex-start"
+        spacing={2}
       >
         <Grid item xs={12} sm={2}>
-          <div style={{ padding: "1rem 2rem 1rem 0rem" }}>
+          <div style={{}}>
             <People />
           </div>
         </Grid>
 
         <Grid item xs={12} sm={7}>
-          <div style={{ padding: "1rem 1.5rem 1rem 0rem" }}>
+          <div style={{}}>
             <Middle />
           </div>
         </Grid>
 
         <Grid item xs={12} sm={3}>
-          <div style={{ padding: "1rem 0rem 1rem 1.5rem" }}>
+          <div style={{}}>
             {/* <Profile /> */}
             <Right />
           </div>

@@ -38,37 +38,7 @@ function StreamList() {
   const classes = useStyles();
   return (
     <div style={{ padding: "1rem 0rem" }}>
-      <div>
-        <GridList
-          className={classes.gridList}
-          cols={4}
-          cellHeight={220}
-          spacing={8}
-        >
-          {[1, 2, 3, 4].map((tile) => (
-            <GridListTile key={tile}>
-              <img
-                src={
-                  "https://uploads.dailydot.com/2018/11/watch_nickelodeon_live_stream_free.png"
-                }
-                alt={"Random Tree"}
-              />
-              <GridListTileBar
-                title="Welcome to the party"
-                classes={{
-                  root: classes.titleBar,
-                  title: classes.title,
-                }}
-                actionIcon={
-                  <IconButton>
-                    <StarBorderIcon className={classes.title} />
-                  </IconButton>
-                }
-              />
-            </GridListTile>
-          ))}
-        </GridList>
-      </div>
+      <div></div>
     </div>
   );
 }

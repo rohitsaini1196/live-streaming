@@ -1,3 +1,3 @@
 # live-streaming
 
-Live Streaming Applicaiton using Node and Next JS
+Live Streaming Applicaiton using Node and React JS

@@ -73,7 +73,16 @@ module.exports = {
         return res.status(404).send("User not found");
       }
 
-      res.status(200).json(user);
+      var userDetails = {
+        userId: user._id,
+        name: user.name,
+        username: user.username,
+        bio: user.bio,
+        image: user.image,
+        createdAt: user.createdAt,
+      };
+
+      res.status(200).json(userDetails);
     } catch (error) {
       res.status(400).send(error);
     }

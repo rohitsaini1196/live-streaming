@@ -47,8 +47,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Layout({ children }) {
-  const { isAuthenticated, username, userId, login, logout } =
-    useContext(AuthContext);
+  const { isAuthenticated, user, login, logout } = useContext(AuthContext);
   const anchorRef = React.useRef(null);
   let history = useHistory();
   const classes = useStyles();
@@ -56,7 +55,7 @@ function Layout({ children }) {
   const [open, setOpen] = React.useState(false);
 
   const randomAuthTest = () => {
-    console.log({ userId, username, isAuthenticated, login, logout });
+    console.log({ user, isAuthenticated, login, logout });
   };
 
   const localLogout = () => {
@@ -93,13 +92,6 @@ function Layout({ children }) {
     prevOpen.current = open;
   }, [open]);
 
-  useEffect(() => {
-    console.log("ggwp");
-    if (auth.isAuthenticated()) {
-      setUserName(auth.getCuurentUser);
-    }
-  }, [userName]);
-
   return (
     <div>
       <div>
@@ -123,7 +115,7 @@ function Layout({ children }) {
             <Typography variant="h6" className={classes.title}>
               Stract
             </Typography>
-            {userName ? (
+            {isAuthenticated ? (
               <div>
                 {/* <Button
                   color="inherit"
@@ -138,7 +130,7 @@ function Layout({ children }) {
                   <Avatar
                     className={classes.large}
                     alt="Rohit Saini"
-                    src="https://avatars.githubusercontent.com/u/31476481?v=4"
+                    src={user.image}
                   />
                 </IconButton>
               </div>

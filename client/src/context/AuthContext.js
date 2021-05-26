@@ -9,14 +9,12 @@ export default AuthContext;
 
 export function AuthProviderLocal(props) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [username, setUsername] = useState("");
-  const [userId, setuserId] = useState("");
+  const [user, setUser] = useState({});
 
   const logout = () => {
     localStorage.removeItem("stract-user-token");
     setIsAuthenticated(false);
-    setUsername("");
-    setuserId("");
+    setUser({});
   };
 
   const login = (email, password) => {
@@ -37,26 +35,36 @@ export function AuthProviderLocal(props) {
       });
   };
 
-  useEffect(() => {
-    async function userLocalUser() {
-      const token = await localStorage.getItem("stract-user-token");
-      if (token != null) {
-        setIsAuthenticated(true);
-        var jwtObj = jwtDecode(token);
-        console.log(jwtObj);
-        setUsername(jwtObj.username);
-        setuserId(jwtObj._id);
-      }
+  const fetchUserDetails = (username) => {
+    return axios
+      .get(AUTH_API_URL + "u/" + username)
+      .then((res) => {
+        if (res) {
+          //setUser(res.data);
+          return res.data;
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(async () => {
+    const token = await localStorage.getItem("stract-user-token");
+    if (token != null) {
+      setIsAuthenticated(true);
+      var jwtObj = jwtDecode(token);
+      var username = jwtObj.username;
+      const user = await fetchUserDetails(username);
+      setUser(user);
     }
-    userLocalUser();
-  }, [login]);
+  }, []);
 
   return (
     <AuthContext.Provider
       value={{
         isAuthenticated,
-        username,
-        userId,
+        user,
         login,
         logout,
       }}

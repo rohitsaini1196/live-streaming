@@ -1,30 +1,23 @@
 import { Typography, TextField, Button, Container } from "@material-ui/core";
-import React, { useEffect, useState } from "react";
-import auth from "../services/auth";
+import React, { useEffect, useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
+import AuthContext from "../context/AuthContext";
 
 function Login() {
   let history = useHistory();
+  const { isAuthenticated, login, logout } = useContext(AuthContext);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-
   const submitForm = (e) => {
     e.preventDefault();
     console.log({ email, password });
-    auth.login(email, password).then((res) => {
+    login(email, password).then((res) => {
       console.log(res);
       history.push("/");
     });
   };
-
-  useEffect(() => {
-    var gg = auth.isAuthenticated();
-    //console.log(gg);
-    setIsAuthenticated(gg);
-  }, []);
 
   return (
     <div>

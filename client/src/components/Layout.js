@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   CssBaseline,
   AppBar,
@@ -23,6 +23,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import LiveTvIcon from "@material-ui/icons/LiveTv";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 
+import AuthContext from "../context/AuthContext";
+
 import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
@@ -45,11 +47,17 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Layout({ children }) {
+  const { isAuthenticated, username, userId, login, logout } =
+    useContext(AuthContext);
   const anchorRef = React.useRef(null);
   let history = useHistory();
   const classes = useStyles();
   const [userName, setUserName] = useState("");
   const [open, setOpen] = React.useState(false);
+
+  const randomAuthTest = () => {
+    console.log({ userId, username, isAuthenticated, login, logout });
+  };
 
   const localLogout = () => {
     auth.logout();
@@ -183,7 +191,7 @@ function Layout({ children }) {
                     >
                       <MenuItem onClick={handleClose}>Profile</MenuItem>
                       <MenuItem onClick={handleClose}>Report a Bug</MenuItem>
-                      <MenuItem onClick={handleClose}>Github</MenuItem>
+                      <MenuItem onClick={randomAuthTest}>Github</MenuItem>
                       <MenuItem onClick={localLogout}>Logout</MenuItem>
                     </MenuList>
                   </ClickAwayListener>

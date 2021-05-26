@@ -5,6 +5,7 @@ import {
 import CssBaseline from "@material-ui/core/CssBaseline";
 
 import Router from "./Router";
+import { AuthProviderLocal } from "./context/AuthContext";
 const theme = createMuiTheme({
   palette: {
     type: "dark",
@@ -24,12 +25,14 @@ const theme = createMuiTheme({
 });
 function App() {
   return (
-    <MuiThemeProvider theme={theme}>
-      <CssBaseline />
-      <div>
-        <Router />
-      </div>
-    </MuiThemeProvider>
+    <AuthProviderLocal>
+      <MuiThemeProvider theme={theme}>
+        <CssBaseline />
+        <div>
+          <Router />
+        </div>
+      </MuiThemeProvider>
+    </AuthProviderLocal>
   );
 }
 

@@ -6,6 +6,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import Signup from "./pages/Signup";
+import StreamView from "./pages/StreamView";
 
 export default function App() {
   return (
@@ -22,6 +23,10 @@ export default function App() {
 
           <Route exact path="/signup">
             <Signup />
+          </Route>
+
+          <Route path="/stream/:username">
+            <StreamView />
           </Route>
 
           <Route path="/streamer/:username">

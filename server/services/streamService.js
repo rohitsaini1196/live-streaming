@@ -9,7 +9,7 @@ module.exports = {
     res.send("test success");
   },
 
-  create: (req, res) => {
+  create: async (req, res) => {
     const { title, username, userId } = req.body;
     const stream = new Stream({
       title,
@@ -20,6 +20,20 @@ module.exports = {
     try {
       const savedStream = await stream.save();
       res.json(savedStream);
+    } catch (error) {
+      res.status(400).send(error);
+    }
+  },
+
+  getStreamByUsername: async (req, res) => {
+    const { username } = req.params;
+    console.log(username);
+    try {
+      const stream = await Stream.findOne({ username });
+      if (!stream) {
+        return res.status(404).send("Stream Not found");
+      }
+      res.status(200).json(stream);
     } catch (error) {
       res.status(400).send(error);
     }

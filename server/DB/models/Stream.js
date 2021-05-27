@@ -22,6 +22,16 @@ var StreamSchema = new Mongoose.Schema(
       type: String,
       default: uuid(),
     },
+
+    status: {
+      type: String,
+      default: "Stream not having media input",
+    },
+
+    serverLink: {
+      type: String,
+      default: "rtmp://127.0.0.1:1935/live",
+    },
   },
   { timestamps: true }
 );

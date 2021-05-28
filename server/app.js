@@ -56,4 +56,4 @@ app.get("/", (req, res) => {
 app.use("/api", router);
 
 app.listen(port, () => console.log(`App listening on ${port}!`));
-//nodeMediaServer.run();
+nodeMediaServer.run();

@@ -39,6 +39,29 @@ module.exports = {
     }
   },
 
+  getStreams: async (req, res) => {
+    try {
+      console.log(req.user);
+      const streams = await Stream.find().lean();
+      res.status(200).json(streams);
+    } catch (error) {
+      res.status(400).send(error);
+    }
+  },
+
+  deleteStream: async (req, res) => {
+    const { username } = req.params;
+    try {
+      console.log("DeletingStream");
+      const stream = await Stream.findOneAndRemove({ username });
+      if (stream) {
+        res.status(202).send("Stream of user" + username + "delete");
+      }
+    } catch (error) {
+      res.status(400).send(error);
+    }
+  },
+
   //   register: async (req, res) => {
   //     const { name, username, password, email } = req.body;
 

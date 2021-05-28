@@ -1,7 +1,7 @@
 var Mongoose = require("mongoose");
 
 const { v4: uuid } = require("uuid");
-
+const randomId = uuid();
 var StreamSchema = new Mongoose.Schema(
   {
     title: String,
@@ -20,12 +20,17 @@ var StreamSchema = new Mongoose.Schema(
 
     streamKey: {
       type: String,
-      default: uuid(),
+      default: randomId,
     },
 
     status: {
       type: String,
       default: "Stream not having media input",
+    },
+
+    clintLink: {
+      type: String,
+      default: `http://127.0.0.1:8888/live/${randomId}/index.m3u8`,
     },
 
     serverLink: {

@@ -8,11 +8,10 @@ router
   .route("/s/:username")
   .get(verifyUserToken, streamService.getStreamByUsername);
 
-// router.route("/register").post(userService.register);
-// router.route("/login").post(userService.login);
-// router.route("/all").get(verifyUserToken, userService.getUsers);
-// router.route("/u/:username").get(userService.getUserByusername);
-// router.route("/get-stream-key/:username").get(userService.getStreamKey);
-// router.route("/post-stream-key/:username").post(userService.generateStreamKey);
+router.route("/all").get(verifyUserToken, streamService.getStreams);
+
+router
+  .route("/d/:username")
+  .delete(verifyUserToken, streamService.deleteStream);
 
 module.exports = router;

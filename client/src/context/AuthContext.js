@@ -35,6 +35,21 @@ export function AuthProviderLocal(props) {
       });
   };
 
+  const register = (payload) => {
+    return axios
+      .post(AUTH_API_URL + "register", payload)
+      .then((res) => {
+        console.log(res);
+        if (res) {
+          localStorage.setItem("stract-user-token", JSON.stringify(res.data));
+          return res.data;
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   const fetchUserDetails = (username) => {
     return axios
       .get(AUTH_API_URL + "u/" + username)
@@ -67,6 +82,7 @@ export function AuthProviderLocal(props) {
         user,
         login,
         logout,
+        register,
       }}
     >
       {props.children}

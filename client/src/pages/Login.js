@@ -1,4 +1,10 @@
-import { Typography, TextField, Button, Container } from "@material-ui/core";
+import {
+  Typography,
+  TextField,
+  Button,
+  Container,
+  Link,
+} from "@material-ui/core";
 import React, { useEffect, useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
@@ -16,6 +22,7 @@ function Login() {
     login(email, password).then((res) => {
       console.log(res);
       history.push("/");
+      window.location.reload(true);
     });
   };
 
@@ -61,6 +68,10 @@ function Login() {
                 Submit
               </Button>
             </div>
+
+            <Typography style={{ padding: "1rem 0.5rem" }}>
+              New to platform? <Link href="/signup">Create Account </Link> Here
+            </Typography>
           </form>
         </Container>
       </div>

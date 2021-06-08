@@ -29,7 +29,13 @@ module.exports = {
 
     try {
       const savedUser = await user.save();
-      res.json(savedUser);
+      if (savedUser) {
+        const token = jwt.sign(
+          { _id: savedUser._id, username: savedUser.username },
+          process.env.TOKEN_SECRET
+        );
+        res.header("auth-token", token).send(token);
+      }
     } catch (error) {
       res.status(400).send(error);
     }

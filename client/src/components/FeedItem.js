@@ -112,6 +112,7 @@ function FeedItem({ data, cUser, deletePost }) {
             <MenuItem onClick={handleMenuClose}>Share</MenuItem>
             <MenuItem
               onClick={() => {
+                handleMenuClose();
                 deletePost(data._id);
               }}
             >
@@ -144,14 +145,14 @@ function FeedItem({ data, cUser, deletePost }) {
               }}
             >
               <IconButton size="small" style={{}}>
-                <ThumbUpAltOutlinedIcon />
+                <ThumbUpAltOutlinedIcon fontSize="small" />
               </IconButton>
-              <Typography>10</Typography>
+              <Typography variant="subtitle2">10</Typography>
             </div>
 
             <div>
               <IconButton size="small" style={{ margin: "0rem 0.5rem" }}>
-                <ThumbDownAltOutlinedIcon />
+                <ThumbDownAltOutlinedIcon fontSize="small" />
               </IconButton>
             </div>
             <div
@@ -161,10 +162,10 @@ function FeedItem({ data, cUser, deletePost }) {
                 margin: "0rem 0.5rem",
               }}
             >
-              <IconButton size="small" style={{}}>
-                <CommentOutlinedIcon />
+              <IconButton size="small">
+                <CommentOutlinedIcon fontSize="small" />
               </IconButton>
-              <Typography>60</Typography>
+              <Typography variant="subtitle2">60</Typography>
             </div>
           </div>
         </Card>

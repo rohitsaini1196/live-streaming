@@ -26,7 +26,9 @@ import AuthContext from "../context/AuthContext";
 import axios from "axios";
 import streamService from "../services/stream";
 import postService from "../services/post";
-function People() {
+
+import { withSnackbar } from "./SnackbarHOC";
+function People(props) {
   const { isAuthenticated, user } = useContext(AuthContext);
   const [isGoing, setIsGoing] = useState(false);
   const [isWriting, setIsWriting] = useState(false);
@@ -66,6 +68,7 @@ function People() {
 
     if (newPost) {
       setPosts((posts) => [newPost, ...posts]);
+      props.snackbarShowMessage("New Post Craeted");
     }
     setIsWriting(false);
     setFeedText("");
@@ -75,6 +78,7 @@ function People() {
     const deletedPost = await postService.deletePost(postId, user.userId);
     if (deletedPost) {
       setPosts(posts.filter((post) => post._id !== postId));
+      props.snackbarShowMessage("Post Deleted Successfully");
     }
   };
 
@@ -399,4 +403,4 @@ function People() {
   );
 }
 
-export default People;
+export default withSnackbar(People);

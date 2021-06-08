@@ -15,6 +15,7 @@ import {
   Divider,
   ListItemSecondaryAction,
   Link,
+  DialogActions,
 } from "@material-ui/core";
 import React, { useEffect, useState, useContext } from "react";
 import FilterNoneIcon from "@material-ui/icons/FilterNone";
@@ -24,14 +25,29 @@ import StreamList from "./StreamList";
 import AuthContext from "../context/AuthContext";
 import axios from "axios";
 import streamService from "../services/stream";
-
+import postService from "../services/post";
 function People() {
   const { isAuthenticated, user } = useContext(AuthContext);
   const [isGoing, setIsGoing] = useState(false);
+  const [isWriting, setIsWriting] = useState(false);
   const [streamName, setStreamName] = useState("");
   const [prevStream, setPrevStream] = useState(false);
   const [streamDetail, setStreamDetail] = useState({});
   const [openCreds, setOpenCreds] = useState(false);
+
+  const [feedText, setFeedText] = useState("");
+
+  const [posts, setPosts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  // console.log(user);
+
+  useEffect(async () => {
+    const posts = await postService.fetchAllPosts();
+    if (posts) {
+      setPosts(posts);
+    }
+    setIsLoading(false);
+  }, []);
 
   const handleCloseCreds = () => {
     setOpenCreds(false);
@@ -40,18 +56,59 @@ function People() {
     setOpenCreds(true);
   };
 
+  const publishFeedPost = async () => {
+    console.log(feedText);
+    const newPost = await postService.createNewPost(
+      feedText,
+      user.username,
+      user.userId
+    );
+
+    if (newPost) {
+      setPosts((posts) => [newPost, ...posts]);
+    }
+    setIsWriting(false);
+    setFeedText("");
+  };
+
+  const deleteFeedPost = async (postId) => {
+    const deletedPost = await postService.deletePost(postId, user.userId);
+    if (deletedPost) {
+      setPosts(posts.filter((post) => post._id !== postId));
+    }
+  };
+
+  const stopStreaming = async () => {
+    const deletedStream = await streamService.stopStream(user.username);
+    // console.log(deletedStream);
+    if (deletedStream) {
+      setPrevStream(false);
+      setStreamDetail({});
+    }
+  };
+
+  const startNewStream = async () => {
+    const newSteam = await streamService.createNewStream(
+      streamName,
+      user.username,
+      user.userId
+    );
+    setPrevStream(true);
+    setStreamDetail(newSteam);
+  };
+
   useEffect(async () => {
     if (user.username) {
-      // console.log("ggwp ggwp");
+      //console.log("ggwp ggwp");
       const stream = await streamService.fetchStream(user.username);
-      console.log(stream);
+      //console.log(stream);
       if (stream) {
         setPrevStream(true);
         setIsGoing(true);
         setStreamDetail(stream);
       }
     }
-  }, [user.username]);
+  }, [user]);
 
   return (
     <div>
@@ -97,6 +154,11 @@ function People() {
                       style={{ backgroundColor: "red" }}
                     />
                   </div>
+                  <div style={{ padding: "0.4rem 0rem" }}>
+                    <Typography variant="subtitle2" color="textSecondary">
+                      <strong>Staus:</strong> {streamDetail.status}
+                    </Typography>
+                  </div>
 
                   <div style={{ padding: "1rem 0rem", display: "flex" }}>
                     <Button
@@ -123,6 +185,13 @@ function People() {
                       style={{ textTransform: "none" }}
                     >
                       Preview Stream
+                    </Button>
+                    <Button
+                      size="small"
+                      style={{ textTransform: "none" }}
+                      onClick={stopStreaming}
+                    >
+                      Stop Streaming
                     </Button>
                   </div>
 
@@ -217,6 +286,7 @@ function People() {
                         variant="contained"
                         style={{ margin: "0.5rem 0rem" }}
                         size="small"
+                        onClick={startNewStream}
                       >
                         Submit
                       </Button>
@@ -257,14 +327,73 @@ function People() {
             color="primary"
             variant="contained"
             style={{ textTransform: "none" }}
+            onClick={() => {
+              setIsWriting(!isWriting);
+            }}
           >
             Write Post
           </Button>
         </div>
       </div>
 
+      <div>
+        <Dialog
+          open={isWriting}
+          fullWidth
+          maxWidth="sm"
+          onClose={() => {
+            setIsWriting(false);
+          }}
+        >
+          <div style={{ padding: "1.5rem 1.5rem 0.5rem 1.5rem" }}>
+            <Typography>
+              {" "}
+              Hey <strong>{user.name}</strong>, what's in your mind?
+            </Typography>
+          </div>
+          <DialogContent>
+            <TextField
+              className="textarea"
+              fullWidth
+              variant="outlined"
+              rowsMax={5}
+              rows={3}
+              multiline={true}
+              value={feedText}
+              onChange={(e) => {
+                setFeedText(e.target.value);
+              }}
+            />
+          </DialogContent>
+          <DialogActions style={{ padding: "0.5rem 1.5rem" }}>
+            <Button
+              onClick={() => {
+                setIsWriting(false);
+              }}
+              color="primary"
+              variant="outlined"
+              style={{ textTransform: "none" }}
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={publishFeedPost}
+              color="primary"
+              variant="contained"
+              style={{ textTransform: "none" }}
+            >
+              Post
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </div>
+
       <div style={{ padding: "1rem" }}>
-        <Feed />
+        <Feed
+          posts={posts.reverse()}
+          cUser={user}
+          deletePost={deleteFeedPost}
+        />
       </div>
     </div>
   );

@@ -1,6 +1,7 @@
 import { Paper, Avatar, Typography, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import React from "react";
+import React, { useContext } from "react";
+import AuthContext from "../context/AuthContext";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -21,6 +22,7 @@ const useStyles = makeStyles((theme) => ({
 
 function Profile() {
   const classes = useStyles();
+  const { user } = useContext(AuthContext);
   return (
     <div>
       <Paper style={{ borderRadius: 12 }}>
@@ -29,14 +31,14 @@ function Profile() {
             <div>
               <Avatar
                 className={classes.large}
-                alt="Rohit Saini"
-                src="https://avatars.githubusercontent.com/u/31476481?v=4"
+                alt={user.name}
+                src={user.image}
               />
             </div>
             <div style={{ padding: "1rem" }}>
-              <Typography>Rohit Saini</Typography>
+              <Typography>{user.name}</Typography>
               <Typography variant="subtitle1" color="textSecondary">
-                @rohitsaini
+                {`@${user.username}`}
               </Typography>
             </div>
           </div>

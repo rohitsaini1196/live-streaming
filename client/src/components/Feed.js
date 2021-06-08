@@ -1,12 +1,23 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import FeedItem from "./FeedItem";
+import postService from "../services/post";
+function Feed({ posts, cUser, deletePost }) {
+  // const [posts, setPosts] = useState([]);
+  // const [isLoading, setIsLoading] = useState(true);
 
-function Feed() {
+  // useEffect(async () => {
+  //   const posts = await postService.fetchAllPosts();
+  //   if (posts) {
+  //     setPosts(posts);
+  //   }
+  //   setIsLoading(false);
+  // }, []);
+
   return (
     <div>
-      {[1, 2, 3, 4].map((feed) => (
-        <div key={feed}>
-          <FeedItem />
+      {posts.map((post, i) => (
+        <div key={i}>
+          <FeedItem data={post} cUser={cUser} deletePost={deletePost} />
         </div>
       ))}
     </div>

@@ -1,4 +1,4 @@
-const { User } = require("../DB/dbModels");
+const { User, Follow } = require("../DB/dbModels");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { v4: uuid } = require("uuid");
@@ -109,34 +109,63 @@ module.exports = {
     }
   },
 
-  getStreamKey: async (req, res) => {
-    const { username } = req.params;
+  follow: async (req, res) => {
+    const { followerId, followeeId } = req.body;
 
+    const newFollow = new Follow({ followerId, followeeId });
     try {
-      const user = await User.findOne({ username });
-      if (!user) {
-        return res.status(404).send("User not found");
+      const savedFollow = await newFollow.save();
+      if (savedFollow) {
+        res.status(202).send("User 1 started following user 2");
       }
-
-      res.status(200).json(user.streamKey);
     } catch (error) {
+      console.log(error);
       res.status(400).send(error);
     }
   },
 
-  generateStreamKey: async (req, res) => {
-    const { username } = req.body;
+  unFollow: async (req, res) => {
+    const { followerId, followeeId } = req.params;
     try {
-      const user = await User.findOneAndUpdate(
-        {
-          username,
-        },
-        {
-          streamKey: uuid(),
-        }
-      );
-    } catch (error) {
-      res.status(400).send(error);
-    }
+      console.log("Unfollowing somebody");
+      const unfollow = await Follow.findOneAndRemove({
+        followerId,
+        followeeId,
+      });
+      if (unfollow) {
+        res.status(202).send("Unfollowed somebody");
+      }
+    } catch (error) {}
   },
+
+  // getStreamKey: async (req, res) => {
+  //   const { username } = req.params;
+
+  //   try {
+  //     const user = await User.findOne({ username });
+  //     if (!user) {
+  //       return res.status(404).send("User not found");
+  //     }
+
+  //     res.status(200).json(user.streamKey);
+  //   } catch (error) {
+  //     res.status(400).send(error);
+  //   }
+  // },
+
+  // generateStreamKey: async (req, res) => {
+  //   const { username } = req.body;
+  //   try {
+  //     const user = await User.findOneAndUpdate(
+  //       {
+  //         username,
+  //       },
+  //       {
+  //         streamKey: uuid(),
+  //       }
+  //     );
+  //   } catch (error) {
+  //     res.status(400).send(error);
+  //   }
+  // },
 };

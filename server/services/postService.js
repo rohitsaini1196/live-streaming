@@ -45,14 +45,20 @@ module.exports = {
   },
 
   deletePost: async (req, res) => {
-    const { postId, userId } = req.params;
+    const { postId } = req.params;
     try {
       console.log("Deleting Post");
       const post = await Post.findOneAndRemove({ _id: postId });
+      console.log(post);
       if (post) {
-        res.status(202).send("Post of user" + username + "deleted");
+        res.status(202).send("Post  deleted");
+      } else {
+        res
+          .status(404)
+          .send("Post was not there ,It does not exist or Already Deleted");
       }
     } catch (error) {
+      console.log(error);
       res.status(400).send(error);
     }
   },

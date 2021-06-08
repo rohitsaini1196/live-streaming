@@ -51,7 +51,7 @@ export default {
   deletePost(postId, userId) {
     const URL = POST_API_URL + "d/" + postId + "/" + userId;
 
-    console.log(URL);
+    //console.log(URL);
     return axios
       .delete(URL, { headers: authHeader() })
       .then((res) => {

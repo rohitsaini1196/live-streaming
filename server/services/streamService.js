@@ -5,7 +5,7 @@ const { v4: uuid } = require("uuid");
 
 module.exports = {
   test: (req, res) => {
-    console.log("from rwegister ggd");
+    console.log("from register ggd");
     res.send("test success");
   },
 

@@ -1,5 +1,6 @@
-import React from "react";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import React, { useContext } from "react";
+import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
+
 import Layout from "./components/Layout";
 
 import Home from "./pages/Home";
@@ -8,14 +9,15 @@ import ProfilePage from "./pages/ProfilePage";
 import Signup from "./pages/Signup";
 import StreamView from "./pages/StreamView";
 
+import PrivateRoute from "./components/Utility/PrivateRoute";
 export default function App() {
   return (
     <BrowserRouter>
       <Layout>
         <Switch>
-          <Route exact path="/">
+          <PrivateRoute exact path="/">
             <Home />
-          </Route>
+          </PrivateRoute>
 
           <Route exact path="/login">
             <Login />
@@ -25,13 +27,13 @@ export default function App() {
             <Signup />
           </Route>
 
-          <Route path="/stream/:username">
+          <PrivateRoute path="/stream/:username">
             <StreamView />
-          </Route>
+          </PrivateRoute>
 
-          <Route path="/u/:username">
+          <PrivateRoute path="/u/:username">
             <ProfilePage />
-          </Route>
+          </PrivateRoute>
         </Switch>
       </Layout>
     </BrowserRouter>

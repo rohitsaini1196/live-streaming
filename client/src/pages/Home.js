@@ -1,10 +1,10 @@
 import React from "react";
-import ScreenLayout from "../components/ScreenLayout";
+import Middle from "../components/Middle";
 
 function Home() {
   return (
     <div>
-      <ScreenLayout />
+      <Middle />
     </div>
   );
 }

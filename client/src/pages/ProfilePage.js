@@ -1,10 +1,10 @@
 import React from "react";
-import ProfileViewLayout from "../components/ProfileViewLayout";
+import ShowProfile from "../components/Profile/ShowProfile";
 
 function Profile() {
   return (
     <div>
-      <ProfileViewLayout />
+      <ShowProfile />
     </div>
   );
 }

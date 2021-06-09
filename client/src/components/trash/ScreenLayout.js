@@ -1,10 +1,10 @@
 import React from "react";
 import { Grid, Paper, Box, Hidden } from "@material-ui/core";
-import Profile from "./Profile";
-import People from "./People";
-import Middle from "./Middle";
-import Right from "./Right";
-import Left from "./Left";
+import Profile from "../Profile";
+import People from "../People";
+import Middle from "../Middle";
+import Right from "../Right";
+import Left from "../Left";
 function ScreenLayout() {
   return (
     <div>

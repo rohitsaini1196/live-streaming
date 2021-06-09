@@ -20,10 +20,10 @@ import {
 import React, { useEffect, useState, useContext } from "react";
 import FilterNoneIcon from "@material-ui/icons/FilterNone";
 import LiveHelpIcon from "@material-ui/icons/LiveHelp";
-import Feed from "./Feed";
-import StreamList from "./StreamList";
+
+import HomePosts from "./Posts/HomePosts";
+import StreamList from "./Middle/StreamList";
 import AuthContext from "../context/AuthContext";
-import axios from "axios";
 import streamService from "../services/stream";
 import postService from "../services/post";
 
@@ -393,7 +393,7 @@ function People(props) {
       </div>
 
       <div style={{ padding: "1rem" }}>
-        <Feed
+        <HomePosts
           posts={posts.reverse()}
           cUser={user}
           deletePost={deleteFeedPost}

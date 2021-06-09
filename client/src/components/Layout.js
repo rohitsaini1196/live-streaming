@@ -14,11 +14,14 @@ import {
   Grow,
   Paper,
   MenuList,
+  Grid,
+  Hidden,
   ClickAwayListener,
 } from "@material-ui/core";
 import Footer from "./Footer";
+import Right from "./Right/Right";
+import Left from "./Left/Left";
 import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
-import auth from "../services/auth";
 import { makeStyles } from "@material-ui/core/styles";
 import LiveTvIcon from "@material-ui/icons/LiveTv";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
@@ -59,7 +62,7 @@ function Layout({ children }) {
   };
 
   const localLogout = () => {
-    auth.logout();
+    logout();
     setUserName("");
     history.push("/login");
   };
@@ -195,7 +198,31 @@ function Layout({ children }) {
 
         {/* <div style={{ textAlign: "center", padding: "1rem" }}></div> */}
         <Container maxWidth="lg" style={{ padding: "2rem 0rem" }}>
-          {children}
+          <Grid
+            container
+            direction="row"
+            justify="space-between"
+            alignItems="flex-start"
+            spacing={2}
+          >
+            <Hidden xsDown smDown>
+              <Grid item xs={12} sm={3}>
+                <div style={{}}>
+                  <Left />
+                </div>
+              </Grid>
+            </Hidden>
+
+            <Grid item xs={12} sm={6}>
+              {children}
+            </Grid>
+
+            <Grid item xs={12} sm={3}>
+              <div style={{}}>
+                <Right />
+              </div>
+            </Grid>
+          </Grid>
         </Container>
       </div>
     </div>

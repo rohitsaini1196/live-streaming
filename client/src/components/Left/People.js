@@ -13,7 +13,7 @@ import {
 
 import SearchIcon from "@material-ui/icons/Search";
 
-import userService from "../services/user";
+import userService from "../../services/user";
 
 const useStyles = makeStyles((theme) => ({
   peoplediv: {

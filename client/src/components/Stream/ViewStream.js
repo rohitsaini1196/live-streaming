@@ -12,8 +12,8 @@ import {
 } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
-import streamService from "../services/stream";
-import userService from "../services/user";
+import streamService from "../../services/stream";
+import userService from "../../services/user";
 function ViewStream(props) {
   const { username } = useParams();
   const [streamer, setStreamer] = useState({});

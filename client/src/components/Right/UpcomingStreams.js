@@ -34,7 +34,7 @@ function UpcomingStreams() {
   const classes = useStyles();
   return (
     <div style={{ margin: "2rem 0rem" }}>
-      <Paper style={{ borderRadius: 11 }}>
+      <Paper>
         <div style={{ padding: "0rem 0rem 0.5rem 0rem" }}>
           <div style={{ padding: "0.5rem 1rem" }}>
             <div

@@ -1,11 +1,10 @@
 import React from "react";
 import { Grid, Paper, Box, Hidden } from "@material-ui/core";
 
-import Middle from "./Middle";
-import Right from "./Right";
-import Left from "./Left";
-import ViewStream from "./ViewStream";
-function StreamViewLayout() {
+import Right from "../Right";
+import Left from "../Left";
+import ShowProfile from "../Profile/ShowProfile";
+function ProfileViewLayout() {
   return (
     <div>
       <Grid
@@ -25,7 +24,7 @@ function StreamViewLayout() {
 
         <Grid item xs={12} sm={6}>
           <div style={{}}>
-            <ViewStream />
+            <ShowProfile />
           </div>
         </Grid>
 
@@ -40,4 +39,4 @@ function StreamViewLayout() {
   );
 }
 
-export default StreamViewLayout;
+export default ProfileViewLayout;

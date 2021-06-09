@@ -1,7 +1,7 @@
 import { Paper, Avatar, Typography, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import React, { useContext } from "react";
-import AuthContext from "../context/AuthContext";
+import AuthContext from "../../context/AuthContext";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,7 +25,7 @@ function Profile() {
   const { user } = useContext(AuthContext);
   return (
     <div>
-      <Paper style={{ borderRadius: 12 }}>
+      <Paper>
         <div style={{ padding: "1rem" }}>
           <div style={{ display: "flex" }}>
             <div>

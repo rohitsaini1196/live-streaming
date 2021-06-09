@@ -1,9 +1,9 @@
 import React from "react";
-import StreamViewLayout from "../components/StreamViewLayout";
+import ViewStream from "../components/Stream/ViewStream";
 function StreamView() {
   return (
     <div>
-      <StreamViewLayout />
+      <ViewStream />
     </div>
   );
 }

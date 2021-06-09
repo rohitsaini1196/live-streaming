@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
+
 import { makeStyles } from "@material-ui/core/styles";
 import {
-  List,
-  Paper,
-  ListSubheader,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
   Avatar,
+  Card,
+  CardHeader,
+  CardActionArea,
   TextField,
   InputAdornment,
   Typography,
@@ -18,19 +16,17 @@ import SearchIcon from "@material-ui/icons/Search";
 import userService from "../services/user";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    width: "100%",
-    maxWidth: 360,
-    backgroundColor: theme.palette.background.paper,
+  peoplediv: {
+    background: "transparent",
+    "&:hover": {
+      background: "#242B2E",
+    },
   },
 }));
 
-function ListItemLink(props) {
-  return <ListItem button component="a" {...props} />;
-}
-
 export default function People() {
   const classes = useStyles();
+
   const [users, setUsers] = useState([]);
   const [filteredUser, setFilteredUsers] = useState([]);
   const [query, setQuery] = useState("");
@@ -48,7 +44,7 @@ export default function People() {
   };
 
   useEffect(() => {
-    if (query.length > 1) {
+    if (query.length > 0) {
       setFilteredUsers(
         users.filter(
           (user) =>
@@ -56,6 +52,8 @@ export default function People() {
             user.username.toLowerCase().includes(query.toLowerCase())
         )
       );
+    } else {
+      setFilteredUsers([]);
     }
   }, [query, users]);
 
@@ -65,6 +63,7 @@ export default function People() {
         <TextField
           variant="outlined"
           size="small"
+          fullWidth
           placeholder="search users"
           value={query}
           onChange={changeQuery}
@@ -80,44 +79,27 @@ export default function People() {
       <div>
         {filteredUser.map((user, i) => (
           <div key={i}>
-            <Typography variant="subtitle2">{user.name}</Typography>
+            <SearchItem user={user} />
           </div>
         ))}
       </div>
-      {/* <div>
-        <List
-          subheader={<ListSubheader component="div">Online</ListSubheader>}
-          style={{ borderRadius: 30 }}
-        >
-          <ListItem button>
-            <ListItemIcon>
-              <Avatar
-                src="https://avatars.dicebear.com/api/male/Fortwin.svg"
-                alt="Fortwin"
-              />
-            </ListItemIcon>
-            <ListItemText primary="FortwinInc" />
-          </ListItem>
-          <ListItem button>
-            <ListItemIcon>
-              <Avatar
-                src="https://avatars.dicebear.com/api/male/Addict.svg"
-                alt="Fortwin"
-              />
-            </ListItemIcon>
-            <ListItemText primary="Addict27" />
-          </ListItem>
-          <ListItem button>
-            <ListItemIcon>
-              <Avatar
-                src="https://avatars.dicebear.com/api/male/TheGuru.svg"
-                alt="Fortwin"
-              />
-            </ListItemIcon>
-            <ListItemText primary="TheGuru" />
-          </ListItem>
-        </List>
-      </div> */}
+    </div>
+  );
+}
+
+function SearchItem({ user }) {
+  const classes = useStyles();
+  return (
+    <div>
+      <Card className={classes.peoplediv} elevation={0}>
+        <CardActionArea href={"/u/rohit"}>
+          <CardHeader
+            avatar={<Avatar src={user.image} alt={user.name} />}
+            title={<Typography variant="body1">{user.name}</Typography>}
+            subheader={"@" + user.username}
+          />
+        </CardActionArea>
+      </Card>
     </div>
   );
 }

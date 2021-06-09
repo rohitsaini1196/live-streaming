@@ -4,7 +4,7 @@ import Layout from "./components/Layout";
 
 import Home from "./pages/Home";
 import Login from "./pages/Login";
-import Profile from "./pages/Profile";
+import ProfilePage from "./pages/ProfilePage";
 import Signup from "./pages/Signup";
 import StreamView from "./pages/StreamView";
 
@@ -29,8 +29,8 @@ export default function App() {
             <StreamView />
           </Route>
 
-          <Route path="/streamer/:username">
-            <Profile />
+          <Route path="/u/:username">
+            <ProfilePage />
           </Route>
         </Switch>
       </Layout>

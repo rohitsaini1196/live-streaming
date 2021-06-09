@@ -194,7 +194,7 @@ function Layout({ children }) {
         </div>
 
         {/* <div style={{ textAlign: "center", padding: "1rem" }}></div> */}
-        <Container maxWidth="xl" style={{ padding: "2rem 1rem" }}>
+        <Container maxWidth="lg" style={{ padding: "2rem 0rem" }}>
           {children}
         </Container>
       </div>

@@ -1,9 +1,10 @@
 import React from "react";
+import ProfileViewLayout from "../components/ProfileViewLayout";
 
 function Profile() {
   return (
     <div>
-      <p>Profile</p>
+      <ProfileViewLayout />
     </div>
   );
 }

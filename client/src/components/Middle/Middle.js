@@ -17,31 +17,27 @@ import {
   Link,
   DialogActions,
 } from "@material-ui/core";
+
 import React, { useEffect, useState, useContext } from "react";
-import FilterNoneIcon from "@material-ui/icons/FilterNone";
-import LiveHelpIcon from "@material-ui/icons/LiveHelp";
 
-import HomePosts from "./Posts/HomePosts";
-import StreamList from "./Middle/StreamList";
-import AuthContext from "../context/AuthContext";
-import streamService from "../services/stream";
-import postService from "../services/post";
+import HomePosts from "../Posts/HomePosts";
+import StreamList from "./StreamList";
+import AuthContext from "../../context/AuthContext";
+import streamService from "../../services/stream";
+import postService from "../../services/post";
 
-import { withSnackbar } from "./SnackbarHOC";
+import { withSnackbar } from "../SnackbarHOC";
+import WritePostPopup from "./WritePostPopup";
+import GoLive from "./GoLive";
 function People(props) {
-  const { isAuthenticated, user } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const [isGoing, setIsGoing] = useState(false);
   const [isWriting, setIsWriting] = useState(false);
-  const [streamName, setStreamName] = useState("");
-  const [prevStream, setPrevStream] = useState(false);
-  const [streamDetail, setStreamDetail] = useState({});
-  const [openCreds, setOpenCreds] = useState(false);
 
   const [feedText, setFeedText] = useState("");
 
   const [posts, setPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  // console.log(user);
 
   useEffect(async () => {
     const posts = await postService.fetchAllPosts();
@@ -51,11 +47,23 @@ function People(props) {
     setIsLoading(false);
   }, []);
 
-  const handleCloseCreds = () => {
-    setOpenCreds(false);
+  const IsGoingTrue = () => {
+    setIsGoing(true);
   };
-  const handleOpenCreds = () => {
-    setOpenCreds(true);
+  const IsGoingFalse = () => {
+    setIsGoing(false);
+  };
+
+  const toggleIsGoing = () => {
+    setIsGoing(!isGoing);
+  };
+
+  const toggleWriting = () => {
+    setIsWriting(!isWriting);
+  };
+
+  const changeFeedText = (e) => {
+    setFeedText(e.target.value);
   };
 
   const publishFeedPost = async () => {
@@ -82,64 +90,23 @@ function People(props) {
     }
   };
 
-  const stopStreaming = async () => {
-    const deletedStream = await streamService.stopStream(user.username);
-    // console.log(deletedStream);
-    if (deletedStream) {
-      setPrevStream(false);
-      setStreamDetail({});
-    }
-  };
-
-  const startNewStream = async () => {
-    const newSteam = await streamService.createNewStream(
-      streamName,
-      user.username,
-      user.userId
-    );
-    setPrevStream(true);
-    setStreamDetail(newSteam);
-  };
-
-  useEffect(async () => {
-    if (user.username) {
-      //console.log("ggwp ggwp");
-      const stream = await streamService.fetchStream(user.username);
-      //console.log(stream);
-      if (stream) {
-        setPrevStream(true);
-        setIsGoing(true);
-        setStreamDetail(stream);
-      }
-    }
-  }, [user]);
-
   return (
     <div>
       <div style={{ padding: "0rem 1rem" }}>
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-          }}
-        >
-          <Typography variant="h6">
-            <Box fontWeight="fontWeightBold">Live Streams</Box>
-          </Typography>
-          <Button
-            color="primary"
-            variant="contained"
-            style={{ textTransform: "none" }}
-            onClick={() => {
-              setIsGoing(!isGoing);
-            }}
-          >
-            Go live
-          </Button>
-        </div>
+        <HeadLineLocal
+          hText="Live Streams"
+          bText="Go live"
+          bFunction={toggleIsGoing}
+        />
 
-        {isGoing ? (
+        <GoLive
+          user={user}
+          isGoing={isGoing}
+          IsGoingTrue={IsGoingTrue}
+          IsGoingFalse={IsGoingFalse}
+        />
+
+        {/* {isGoing ? (
           <div style={{ padding: "1rem 0rem" }}>
             <Paper style={{ padding: "1rem 1rem" }}>
               {prevStream ? (
@@ -310,87 +277,28 @@ function People(props) {
           </div>
         ) : (
           ""
-        )}
+        )} */}
       </div>
       <div style={{ padding: "1rem" }}>
         <StreamList />
       </div>
 
       <div style={{ padding: "2rem 1rem 0rem 1rem" }}>
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-          }}
-        >
-          <Typography variant="h6">
-            <Box fontWeight="fontWeightBold"> Your Feed</Box>
-          </Typography>
-          <Button
-            color="primary"
-            variant="contained"
-            style={{ textTransform: "none" }}
-            onClick={() => {
-              setIsWriting(!isWriting);
-            }}
-          >
-            Write Post
-          </Button>
-        </div>
+        <HeadLineLocal
+          hText="Your Feed"
+          bText="Write Post"
+          bFunction={toggleWriting}
+        />
       </div>
 
-      <div>
-        <Dialog
-          open={isWriting}
-          fullWidth
-          maxWidth="sm"
-          onClose={() => {
-            setIsWriting(false);
-          }}
-        >
-          <div style={{ padding: "1.5rem 1.5rem 0.5rem 1.5rem" }}>
-            <Typography>
-              {" "}
-              Hey <strong>{user.name}</strong>, what's in your mind?
-            </Typography>
-          </div>
-          <DialogContent>
-            <TextField
-              className="textarea"
-              fullWidth
-              variant="outlined"
-              rowsMax={5}
-              rows={3}
-              multiline={true}
-              value={feedText}
-              onChange={(e) => {
-                setFeedText(e.target.value);
-              }}
-            />
-          </DialogContent>
-          <DialogActions style={{ padding: "0.5rem 1.5rem" }}>
-            <Button
-              onClick={() => {
-                setIsWriting(false);
-              }}
-              color="primary"
-              variant="outlined"
-              style={{ textTransform: "none" }}
-            >
-              Cancel
-            </Button>
-            <Button
-              onClick={publishFeedPost}
-              color="primary"
-              variant="contained"
-              style={{ textTransform: "none" }}
-            >
-              Post
-            </Button>
-          </DialogActions>
-        </Dialog>
-      </div>
+      <WritePostPopup
+        feedText={feedText}
+        changeFeedText={changeFeedText}
+        isWriting={isWriting}
+        closeWriting={toggleWriting}
+        userName={user.name}
+        publishFeedPost={publishFeedPost}
+      />
 
       <div style={{ padding: "1rem" }}>
         <HomePosts
@@ -404,3 +312,27 @@ function People(props) {
 }
 
 export default withSnackbar(People);
+
+function HeadLineLocal({ hText, bText, bFunction }) {
+  return (
+    <div
+      style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+      }}
+    >
+      <Typography variant="h6">
+        <Box fontWeight="fontWeightBold">{hText}</Box>
+      </Typography>
+      <Button
+        color="primary"
+        variant="contained"
+        style={{ textTransform: "none" }}
+        onClick={bFunction}
+      >
+        {bText}
+      </Button>
+    </div>
+  );
+}

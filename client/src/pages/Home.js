@@ -1,5 +1,5 @@
 import React from "react";
-import Middle from "../components/Middle";
+import Middle from "../components/Middle/Middle";
 
 function Home() {
   return (
